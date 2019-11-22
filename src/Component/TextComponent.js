@@ -1,4 +1,4 @@
-const TextComponent = (type, children) => {
+const TextComponent = (type, children, attributes) => {
     let element = null;
     let parent = null;
     return {
@@ -6,6 +6,7 @@ const TextComponent = (type, children) => {
         setElement: (el) => element = el,
         getParent: () => parent,
         setParent: (newParent) => parent = newParent,
+        updateAttributes: () => null,
         render: (newParent) => {
             parent = newParent;
             if (!element) {
