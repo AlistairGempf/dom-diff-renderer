@@ -1,8 +1,13 @@
 import Component from './Component/Component';
 import NonDOMComponent from './Component/NonDOMComponent';
 
-const rerender = (element, component) =>
-    element.parentNode.replaceChild(component.render(), element);
+const rerender = (currentComponent, component) =>
+    currentComponent
+        .getParent()
+        .replaceChild(
+            component.render(currentComponent.getParent()),
+            currentComponent.getElement(),
+        );
 
 const zip = rows => rows[0].map((_,c)=>rows.map(row=>row[c]));
 
@@ -45,24 +50,30 @@ const diff = (currentComponent, nextComponent) => {
     }
 };
 
-const diffTrees = (currentTree, newTree) => {
+const diffTrees = (currentTree, newTree, parent) => {
     const match = diff(currentTree, newTree);
     if (!match.result) {
-        return [{current: currentTree, new: newTree}];
+        return [{ current: currentTree, new: newTree }];
     }
     newTree.setElement(currentTree.getElement());
-    return match.children.flatMap(children => diffTrees(children[0], children[1]));
+    newTree.setParent(parent);
+    return match.children.flatMap(children =>
+        diffTrees(children[0], children[1], currentTree.getElement())
+    );
 };
 
 const Tree = (initTree) => {
     let treeElements = {components: initTree};
-    treeElements.components.render().map(child => document.getElementById('root').appendChild(child));
+    treeElements.components.render(document.getElementById('root'))
+        .map(child => document.getElementById('root').appendChild(child));
     const render = (newTree) => {
-        console.log("Rerendering tree");
-        const diffs = diffTrees(treeElements.components, newTree)
+        console.log("Diffing changes to tree");
+        const diffs = diffTrees(treeElements.components, newTree, document.getElementById('root'))
         console.log(diffs.length > 0 ? diffs : "No changes");
-        diffs.map(diff => rerender(diff.current.getElement(), diff.new));
-        treeElements = {components: newTree};
+        diffs.map(diff => {
+            rerender(diff.current, diff.new);
+        });
+        treeElements = { components: newTree };
     }
     return { render };
 };
@@ -101,6 +112,9 @@ async function main() {
 
     await sleep(1000);
     tree.render(testTree4);
+
+    await sleep(1000);
+    tree.render(testTree);
 }
 
 main()

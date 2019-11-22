@@ -1,12 +1,19 @@
 const DOMComponent = (type, children) => {
     let element = null;
+    let parent = null
     return {
         getElement: () => element,
         setElement: (el) => element = el,
-        render: () => {
+        getParent: () => parent,
+        setParent: (newParent) => parent = newParent,
+        render: (newParent) => {
             if (!element) {
+                parent = newParent;
                 const el = document.createElement(type);
-                children.map(child => {const res = child.render(); el.appendChild(res)});
+                children.map(child => {
+                    const res = child.render(el);
+                    el.appendChild(res);
+                });
                 element = el;
             }
         
