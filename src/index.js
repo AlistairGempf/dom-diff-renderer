@@ -102,47 +102,47 @@ async function main() {
     const testTree = NonDOMComponent('tree', [holdDiv]);
 
     const tree = Tree(testTree);
-    
+
     await sleep(1000);
 
-    const par12 = Component('p', [Component('text', ['Hello, ', 'world'])]);
-    const par22 = Component('p', [Component('text', ['This is a ', 'test of a react clone'])]);
-    const holdDiv2 = Component('div', [par12, par22]);
+    const par16 = Component('p', [Component('text', ['Hello, ', 'world'])]);
+    const par26 = Component('p', [Component('text', ['This is a ', 'test of a react clone'])]);
+    const holdDiv6 = Component('div', [par16, par26]);
+    const testTree6 = NonDOMComponent('tree', [holdDiv6]);
+
+    tree.render(testTree6);
+
+    const par22 = Component('p', [Component('text', ['After a change of the ', 'test of a react clone'])]);
+    const holdDiv2 = Component('div', [par1, par22]);
     const testTree2 = NonDOMComponent('tree', [holdDiv2]);
 
+    await sleep(1000);
     tree.render(testTree2);
 
-    // const par22 = Component('p', [Component('text', ['After a change of the ', 'test of a react clone'])]);
-    // const holdDiv2 = Component('div', [par1, par22]);
-    // const testTree2 = NonDOMComponent('tree', [holdDiv2]);
+    const par23 = Component('p', [Component('text', ['This is a ', 'test of a react clone'])]);
+    const holdDiv3 = Component('div', [par1, par23]);
+    const testTree3 = NonDOMComponent('tree', [holdDiv3]);
 
-    // await sleep(1000);
-    // tree.render(testTree2);
-
-    // const par23 = Component('p', [Component('text', ['This is a ', 'test of a react clone'])]);
-    // const holdDiv3 = Component('div', [par1, par23]);
-    // const testTree3 = NonDOMComponent('tree', [holdDiv3]);
-
-    // await sleep(1000);
-    // tree.render(testTree);
+    await sleep(1000);
+    tree.render(testTree);
     
-    // await sleep(1000);
-    // tree.render(testTree3);
+    await sleep(1000);
+    tree.render(testTree3);
     
-    // const par4 = Component('p', [Component('text', ['This is a ', 'test of a react clone'])]);
-    // const testTree4 = NonDOMComponent('tree', [par4]);
+    const par4 = Component('p', [Component('text', ['This is a ', 'test of a react clone'])]);
+    const testTree4 = NonDOMComponent('tree', [par4]);
 
-    // await sleep(1000);
-    // tree.render(testTree4);
+    await sleep(1000);
+    tree.render(testTree4);
 
-    // await sleep(1000);
-    // tree.render(testTree);
+    await sleep(1000);
+    tree.render(testTree);
 
-    // const holdDiv5 = Component('div', [par1, par23]);
-    // const testTree5 = NonDOMComponent('tree', [holdDiv5]);
+    const holdDiv5 = Component('div', [par1, par23]);
+    const testTree5 = NonDOMComponent('tree', [holdDiv5]);
 
-    // await sleep(1000);
-    // tree.render(testTree5);
+    await sleep(1000);
+    tree.render(testTree5);
 
 }
 
